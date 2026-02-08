@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>I Love You Nehu ❤️</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        background: linear-gradient(135deg, #ff4b5c, #ff758c);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Arial', sans-serif;
+        color: white;
+        text-align: center;
+        overflow: hidden;
+    }
+    .box {
+        background: rgba(255,255,255,0.18);
+        padding: 45px;
+        border-radius: 22px;
+        box-shadow: 0 0 35px rgba(0,0,0,0.35);
+        max-width: 90%;
+        z-index: 2;
+    }
+    h1 { font-size: 3rem; margin-bottom: 10px; }
+    h2 { font-size: 2rem; margin: 10px 0; }
+    p { font-size: 1.2rem; }
+
+    .heart {
+        font-size: 4.5rem;
+        animation: beat 1s infinite;
+    }
+    @keyframes beat {
+        0%,100% { transform: scale(1); }
+        50% { transform: scale(1.25); }
+    }
+
+    .tap {
+        margin-top: 20px;
+        font-size: 1rem;
+        opacity: 0.9;
+    }
+
+    .falling-heart {
+        position: fixed;
+        top: -10px;
+        font-size: 24px;
+        animation: fall linear infinite;
+        opacity: 0.8;
+        z-index: 1;
+    }
+
+    @keyframes fall {
+        from { transform: translateY(-10vh); }
+        to { transform: translateY(110vh); }
+    }
+</style>
+</head>
+<body onclick="playMusic()">
+
+<audio id="bgMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+</audio>
+
+<div class="box">
+    <div class="heart">❤️</div>
+    <h1>I Love You</h1>
+    <h2>Nehu 💕</h2>
+    <p>You are my favorite melody in this lifetime.</p>
+    <p>Forever & Always 💖</p>
+    <div class="tap">👉 Tap anywhere to play piano music 🎹</div>
+</div>
+
+<script>
+function playMusic() {
+    const music = document.getElementById("bgMusic");
+    if (music.paused) music.play();
+}
+
+// Falling hearts
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("falling-heart");
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (3 + Math.random() * 5) + "s";
+    heart.style.fontSize = (18 + Math.random() * 30) + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 8000);
+}
+
+setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
