@@ -2,55 +2,89 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>I Love You Nehu ❤️</title>
+<title>Happy Anniversary Nehu ❤️</title>
 
 <style>
     body {
         margin: 0;
         height: 100vh;
-        background: linear-gradient(135deg, #ff4b5c, #ff758c);
+        background: radial-gradient(circle at top, #ff9a9e, #ff4b5c);
         display: flex;
         justify-content: center;
         align-items: center;
-        font-family: 'Arial', sans-serif;
+        font-family: 'Georgia', serif;
         color: white;
         text-align: center;
         overflow: hidden;
     }
+
     .box {
         background: rgba(255,255,255,0.18);
-        padding: 45px;
-        border-radius: 22px;
-        box-shadow: 0 0 35px rgba(0,0,0,0.35);
+        padding: 50px 40px;
+        border-radius: 30px;
+        box-shadow: 0 0 50px rgba(0,0,0,0.4);
         max-width: 90%;
         z-index: 2;
+        animation: fadeIn 2s ease;
     }
-    h1 { font-size: 3rem; margin-bottom: 10px; }
-    h2 { font-size: 2rem; margin: 10px 0; }
-    p { font-size: 1.2rem; }
 
-    .heart {
-        font-size: 4.5rem;
+    @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.9); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    h1 {
+        font-size: 3.2rem;
+        margin: 10px 0;
+        letter-spacing: 2px;
+    }
+
+    h2 {
+        font-size: 2.4rem;
+        margin: 10px 0;
+        color: #ffe6ea;
+    }
+
+    h3 {
+        font-size: 1.7rem;
+        margin-bottom: 10px;
+        color: #fff0f3;
+    }
+
+    p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        margin: 10px 0;
+    }
+
+    .heart-main {
+        font-size: 5rem;
         animation: beat 1s infinite;
     }
+
     @keyframes beat {
         0%,100% { transform: scale(1); }
-        50% { transform: scale(1.25); }
+        50% { transform: scale(1.3); }
     }
 
     .tap {
-        margin-top: 20px;
+        margin-top: 25px;
         font-size: 1rem;
+        opacity: 0.9;
+        font-style: italic;
+    }
+
+    .falling-heart, .sparkle {
+        position: fixed;
+        top: -10px;
+        animation: fall linear infinite;
+        z-index: 1;
         opacity: 0.9;
     }
 
-    .falling-heart {
-        position: fixed;
-        top: -10px;
-        font-size: 24px;
-        animation: fall linear infinite;
-        opacity: 0.8;
-        z-index: 1;
+    .sparkle {
+        color: #fff6cc;
+        font-size: 14px;
     }
 
     @keyframes fall {
@@ -59,6 +93,7 @@
     }
 </style>
 </head>
+
 <body onclick="playMusic()">
 
 <audio id="bgMusic" loop>
@@ -66,12 +101,19 @@
 </audio>
 
 <div class="box">
-    <div class="heart">❤️</div>
+    <div class="heart-main">❤️</div>
+    <h3>Happy Anniversary 💐</h3>
     <h1>I Love You</h1>
     <h2>Nehu 💕</h2>
-    <p>You are my favorite melody in this lifetime.</p>
-    <p>Forever & Always 💖</p>
-    <div class="tap">👉 Tap anywhere to play piano music 🎹</div>
+    <p>
+        From the first moment to forever,<br>
+        every heartbeat of mine chooses you.
+    </p>
+    <p>
+        You are my today, my tomorrow,<br>
+        and my always. 💖
+    </p>
+    <div class="tap">Tap anywhere to play music 🎹</div>
 </div>
 
 <script>
@@ -83,19 +125,29 @@ function playMusic() {
 // Falling hearts
 function createHeart() {
     const heart = document.createElement("div");
-    heart.classList.add("falling-heart");
+    heart.className = "falling-heart";
     heart.innerHTML = "❤️";
     heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (3 + Math.random() * 5) + "s";
     heart.style.fontSize = (18 + Math.random() * 30) + "px";
+    heart.style.animationDuration = (3 + Math.random() * 5) + "s";
     document.body.appendChild(heart);
-
-    setTimeout(() => {
-        heart.remove();
-    }, 8000);
+    setTimeout(() => heart.remove(), 8000);
 }
 
-setInterval(createHeart, 300);
+// Sparkles
+function createSparkle() {
+    const sparkle = document.createElement("div");
+    sparkle.className = "sparkle";
+    sparkle.innerHTML = "✨";
+    sparkle.style.left = Math.random() * 100 + "vw";
+    sparkle.style.fontSize = (10 + Math.random() * 20) + "px";
+    sparkle.style.animationDuration = (2 + Math.random() * 4) + "s";
+    document.body.appendChild(sparkle);
+    setTimeout(() => sparkle.remove(), 6000);
+}
+
+setInterval(createHeart, 280);
+setInterval(createSparkle, 500);
 </script>
 
 </body>
