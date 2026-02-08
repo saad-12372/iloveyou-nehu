@@ -8,7 +8,7 @@
     body {
         margin: 0;
         height: 100vh;
-        background: radial-gradient(circle at top, #ff9a9e, #ff4b5c);
+        background: linear-gradient(135deg, #ffdde1, #ee9ca7);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -18,73 +18,89 @@
         overflow: hidden;
     }
 
-    .box {
-        background: rgba(255,255,255,0.18);
-        padding: 50px 40px;
-        border-radius: 30px;
-        box-shadow: 0 0 50px rgba(0,0,0,0.4);
-        max-width: 90%;
-        z-index: 2;
-        animation: fadeIn 2s ease;
+    /* Soft glowing background */
+    .glow {
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(255,255,255,0.35), transparent);
+        border-radius: 50%;
+        animation: floatGlow 8s ease-in-out infinite;
     }
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: scale(0.9); }
+    @keyframes floatGlow {
+        0% { transform: translate(-50px, -40px); }
+        50% { transform: translate(50px, 40px); }
+        100% { transform: translate(-50px, -40px); }
+    }
+
+    .box {
+        background: rgba(255,255,255,0.22);
+        padding: 55px 45px;
+        border-radius: 35px;
+        box-shadow: 0 0 60px rgba(0,0,0,0.35);
+        max-width: 90%;
+        z-index: 2;
+        animation: reveal 2.5s ease;
+    }
+
+    @keyframes reveal {
+        from { opacity: 0; transform: scale(0.85); }
         to { opacity: 1; transform: scale(1); }
     }
 
     h1 {
-        font-size: 3.2rem;
+        font-size: 3.3rem;
         margin: 10px 0;
         letter-spacing: 2px;
     }
 
     h2 {
-        font-size: 2.4rem;
+        font-size: 2.5rem;
+        color: #fff3f6;
         margin: 10px 0;
-        color: #ffe6ea;
     }
 
     h3 {
-        font-size: 1.7rem;
-        margin-bottom: 10px;
-        color: #fff0f3;
+        font-size: 1.8rem;
+        color: #fff7fa;
+        margin-bottom: 15px;
     }
 
     p {
         font-size: 1.2rem;
-        line-height: 1.6;
-        margin: 10px 0;
+        line-height: 1.7;
+        margin: 12px 0;
     }
 
-    .heart-main {
-        font-size: 5rem;
-        animation: beat 1s infinite;
+    .main-heart {
+        font-size: 5.5rem;
+        animation: softBeat 1.6s infinite;
     }
 
-    @keyframes beat {
+    @keyframes softBeat {
         0%,100% { transform: scale(1); }
-        50% { transform: scale(1.3); }
+        50% { transform: scale(1.25); }
     }
 
     .tap {
         margin-top: 25px;
         font-size: 1rem;
-        opacity: 0.9;
+        opacity: 0.85;
         font-style: italic;
     }
 
+    /* Falling hearts */
     .falling-heart, .sparkle {
         position: fixed;
         top: -10px;
         animation: fall linear infinite;
         z-index: 1;
-        opacity: 0.9;
+        opacity: 0.8;
     }
 
     .sparkle {
-        color: #fff6cc;
-        font-size: 14px;
+        color: #fffbe6;
     }
 
     @keyframes fall {
@@ -96,24 +112,27 @@
 
 <body onclick="playMusic()">
 
+<div class="glow"></div>
+
 <audio id="bgMusic" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+    <!-- Soft romantic piano -->
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3" type="audio/mpeg">
 </audio>
 
 <div class="box">
-    <div class="heart-main">❤️</div>
+    <div class="main-heart">❤️</div>
     <h3>Happy Anniversary 💐</h3>
     <h1>I Love You</h1>
     <h2>Nehu 💕</h2>
     <p>
-        From the first moment to forever,<br>
-        every heartbeat of mine chooses you.
+        Every smile, every moment,<br>
+        every heartbeat feels perfect with you.
     </p>
     <p>
-        You are my today, my tomorrow,<br>
-        and my always. 💖
+        You are my forever,<br>
+        my calm, my happiness. 💖
     </p>
-    <div class="tap">Tap anywhere to play music 🎹</div>
+    <div class="tap">Tap anywhere to play soft music 🎹</div>
 </div>
 
 <script>
@@ -122,32 +141,32 @@ function playMusic() {
     if (music.paused) music.play();
 }
 
-// Falling hearts
+// Gentle falling hearts
 function createHeart() {
     const heart = document.createElement("div");
     heart.className = "falling-heart";
     heart.innerHTML = "❤️";
     heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (18 + Math.random() * 30) + "px";
-    heart.style.animationDuration = (3 + Math.random() * 5) + "s";
+    heart.style.fontSize = (16 + Math.random() * 26) + "px";
+    heart.style.animationDuration = (5 + Math.random() * 4) + "s";
     document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 8000);
+    setTimeout(() => heart.remove(), 9000);
 }
 
-// Sparkles
+// Soft sparkles
 function createSparkle() {
     const sparkle = document.createElement("div");
     sparkle.className = "sparkle";
     sparkle.innerHTML = "✨";
     sparkle.style.left = Math.random() * 100 + "vw";
-    sparkle.style.fontSize = (10 + Math.random() * 20) + "px";
-    sparkle.style.animationDuration = (2 + Math.random() * 4) + "s";
+    sparkle.style.fontSize = (10 + Math.random() * 18) + "px";
+    sparkle.style.animationDuration = (4 + Math.random() * 4) + "s";
     document.body.appendChild(sparkle);
-    setTimeout(() => sparkle.remove(), 6000);
+    setTimeout(() => sparkle.remove(), 8000);
 }
 
-setInterval(createHeart, 280);
-setInterval(createSparkle, 500);
+setInterval(createHeart, 400);
+setInterval(createSparkle, 700);
 </script>
 
 </body>
