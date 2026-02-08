@@ -54,7 +54,7 @@ p {
     50% { transform: scale(1.2); }
 }
 
-/* Hearts falling */
+/* Falling hearts */
 .heart {
     position: fixed;
     top: -10px;
@@ -105,9 +105,9 @@ p {
 
 <body>
 
-<!-- 🎻 Background Music -->
+<!-- 🎶 NEW WORKING BACKGROUND MUSIC -->
 <audio id="bgMusic" preload="auto">
-    <source src="https://cdn.pixabay.com/download/audio/2021/11/16/audio_6c9d0e7a9a.mp3" type="audio/mpeg">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
 <!-- Tap to play -->
@@ -132,9 +132,12 @@ p {
 const music = document.getElementById("bgMusic");
 
 function startMusic() {
-    music.volume = 0.7;
-    music.play();
-    document.querySelector(".overlay").style.display = "none";
+    music.volume = 0.8;
+    music.play().then(() => {
+        document.querySelector(".overlay").style.display = "none";
+    }).catch(() => {
+        alert("Please allow sound in browser settings");
+    });
 }
 
 /* Fireworks */
