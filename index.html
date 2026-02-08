@@ -8,7 +8,7 @@
     body {
         margin: 0;
         height: 100vh;
-        background: linear-gradient(135deg, #fbd3e9, #bb377d);
+        background: radial-gradient(circle at bottom, #fbd3e9, #bb377d);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -23,10 +23,10 @@
         backdrop-filter: blur(6px);
         padding: 60px 50px;
         border-radius: 40px;
-        box-shadow: 0 0 80px rgba(0,0,0,0.3);
+        box-shadow: 0 0 90px rgba(0,0,0,0.35);
         max-width: 90%;
         z-index: 5;
-        animation: fadeUp 2.8s ease;
+        animation: fadeUp 2.6s ease;
     }
 
     @keyframes fadeUp {
@@ -34,23 +34,9 @@
         to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    h1 {
-        font-size: 3.2rem;
-        margin: 10px 0;
-        letter-spacing: 2px;
-    }
-
-    h2 {
-        font-size: 2.4rem;
-        margin: 10px 0;
-        color: #fff0f5;
-    }
-
-    h3 {
-        font-size: 1.8rem;
-        margin-bottom: 15px;
-        font-weight: normal;
-    }
+    h1 { font-size: 3.2rem; margin: 10px 0; }
+    h2 { font-size: 2.4rem; color: #fff0f5; }
+    h3 { font-size: 1.8rem; margin-bottom: 12px; }
 
     p {
         font-size: 1.2rem;
@@ -59,7 +45,7 @@
     }
 
     .main-heart {
-        font-size: 5.2rem;
+        font-size: 5rem;
         animation: slowBeat 2.2s infinite;
     }
 
@@ -68,93 +54,136 @@
         50% { transform: scale(1.18); }
     }
 
-    /* Elegant fireworks */
-    .firework {
-        position: fixed;
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        animation: glowBurst 2.8s ease-out forwards;
-        z-index: 1;
-        opacity: 0.8;
-    }
-
-    @keyframes glowBurst {
-        0% { transform: scale(0); opacity: 1; }
-        100% { transform: scale(18); opacity: 0; }
-    }
-
     /* Falling hearts */
     .heart {
         position: fixed;
         top: -10px;
         animation: fall linear infinite;
+        opacity: 0.6;
         z-index: 1;
-        opacity: 0.7;
     }
 
     @keyframes fall {
         from { transform: translateY(-10vh); }
         to { transform: translateY(110vh); }
     }
+
+    /* FIREWORK PARTICLES */
+    .particle {
+        position: fixed;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 2;
+        animation: explode 1.6s ease-out forwards;
+    }
+
+    @keyframes explode {
+        from {
+            transform: translate(0,0) scale(1);
+            opacity: 1;
+        }
+        to {
+            transform: translate(var(--x), var(--y)) scale(0.3);
+            opacity: 0;
+        }
+    }
+
+    /* Tap overlay */
+    .overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.55);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+        cursor: pointer;
+    }
+
+    .overlay span {
+        padding: 14px 30px;
+        border-radius: 30px;
+        background: rgba(255,255,255,0.25);
+        border: 1px solid rgba(255,255,255,0.4);
+        font-size: 1.1rem;
+    }
 </style>
 </head>
 
 <body>
 
-<!-- 🎻 SOFT VIOLIN MUSIC (AUTOPLAY ON ANDROID) -->
-<audio id="bgMusic" autoplay loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5c3b0f3f66.mp3" type="audio/mpeg">
+<!-- 🎻 Violin Music -->
+<audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2021/11/16/audio_6c9d0e7a9a.mp3" type="audio/mpeg">
 </audio>
+
+<!-- Tap to play -->
+<div class="overlay" onclick="startMusic()">
+    <span>🎻 Tap to Play Music</span>
+</div>
 
 <div class="box">
     <div class="main-heart">❤️</div>
     <h3>Happy Anniversary 💐</h3>
     <h1>I Love You</h1>
     <h2>Nehu 💕</h2>
+
     <p>
-        With you, love feels calm,<br>
-        gentle, and beautifully endless.
+        Every moment with you feels magical,<br>
+        calm, and beautifully forever.
     </p>
-    <p>
-        You are my forever. 💖
-    </p>
+    <p>You are my forever 💖</p>
 </div>
 
 <script>
-/* Force autoplay on Android */
-window.addEventListener("load", () => {
-    const music = document.getElementById("bgMusic");
-    music.volume = 0.6;
-    music.play().catch(() => {});
-});
+const music = document.getElementById("bgMusic");
+const overlay = document.querySelector(".overlay");
 
-/* Gentle fireworks */
-function createFirework() {
-    const fw = document.createElement("div");
-    fw.className = "firework";
-    fw.style.left = Math.random() * 100 + "vw";
-    fw.style.top  = Math.random() * 60 + "vh";
-    fw.style.background =
-        `hsl(${Math.random() * 360},60%,80%)`;
-    document.body.appendChild(fw);
-    setTimeout(() => fw.remove(), 2800);
+function startMusic() {
+    music.volume = 0.6;
+    music.play();
+    overlay.style.display = "none";
 }
 
-/* Slow falling hearts */
+/* BEST FIREWORKS */
+function launchFirework() {
+    const x = Math.random() * window.innerWidth;
+    const y = Math.random() * window.innerHeight * 0.5 + 50;
+    const colors = ["#ff4b5c", "#ffd700", "#ff9ff3", "#7bed9f", "#70a1ff"];
+
+    for (let i = 0; i < 30; i++) {
+        const p = document.createElement("div");
+        p.className = "particle";
+        const angle = Math.random() * Math.PI * 2;
+        const distance = Math.random() * 140 + 60;
+
+        p.style.left = x + "px";
+        p.style.top = y + "px";
+        p.style.background = colors[Math.floor(Math.random() * colors.length)];
+        p.style.setProperty("--x", Math.cos(angle) * distance + "px");
+        p.style.setProperty("--y", Math.sin(angle) * distance + "px");
+
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 1600);
+    }
+}
+
+/* Falling hearts */
 function createHeart() {
     const h = document.createElement("div");
     h.className = "heart";
     h.innerHTML = "❤️";
     h.style.left = Math.random() * 100 + "vw";
     h.style.fontSize = (16 + Math.random() * 22) + "px";
-    h.style.animationDuration = (7 + Math.random() * 4) + "s";
+    h.style.animationDuration = (8 + Math.random() * 4) + "s";
     document.body.appendChild(h);
-    setTimeout(() => h.remove(), 11000);
+    setTimeout(() => h.remove(), 12000);
 }
 
-setInterval(createFirework, 2000);
-setInterval(createHeart, 700);
+setInterval(launchFirework, 1800);
+setInterval(createHeart, 900);
 </script>
 
 </body>
